@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "Block Ness Monster",
+    "short_name": "BlockNessMonster",
+    "version": "0.1.0",
+    "description": "A simple URL blocking Chrome extension.",
+    "author": "Suresh Joshi",
+    "homepage_url": "https://github.com/sureshjoshi/block-ness-monster",
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "background": {
+        "persistent": true,
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "browser_action": {
+        "default_title": "Block Ness Monster",
+        "default_popup": "popup.html"
+    }
+}
