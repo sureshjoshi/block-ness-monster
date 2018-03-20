@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Block Ness Monster",
     "short_name": "BlockNessMonster",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "A simple URL blocking Chrome extension.",
     "author": "Suresh Joshi",
     "homepage_url": "https://github.com/sureshjoshi/block-ness-monster",
