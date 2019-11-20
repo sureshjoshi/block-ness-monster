@@ -1,5 +1,3 @@
-// console.log(chrome.storage);
-
 let blockedUrls = [];
 // TODO: Hardcoded filters - these should be added by the user using the storage API
 let filter = {
@@ -12,7 +10,7 @@ let filter = {
     ],
 };
 
-const listener = function(details) {
+const listener = function(details: chrome.webRequest.WebRequestBodyDetails) {
     return {
         redirectUrl: "https://bitbucket.org/dashboard/issues",
     };

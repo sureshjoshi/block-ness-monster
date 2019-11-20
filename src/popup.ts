@@ -1,3 +1,5 @@
+// import {chrome} from "chrome";
+
 function addToBlockList(hostname) {
     console.log("Adding to block list:", hostname);
     chrome.storage.local.get(["blockedUrls"], function(result) {
