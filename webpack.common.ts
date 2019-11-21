@@ -11,7 +11,12 @@ export function srcPath(subdir: string) {
 }
 
 export const common = {
-    entry: "./src/main.tsx",
+    entry: {
+        popup: srcPath("pages/popup.ts"),
+        // options: path.join(__dirname, srcDir + 'options.ts'),
+        background: srcPath("background/background.ts"),
+        // content_script: path.join(__dirname, srcDir + 'content_script.ts')
+    },
     module: {
         rules: [
             {
@@ -67,7 +72,8 @@ export const common = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            filename: "index.html",
+            excludeChunks: ["background"],
+            filename: "popup.html",
             inject: "body",
             minify: {
                 collapseWhitespace: true,
@@ -76,7 +82,7 @@ export const common = {
                 removeComments: true,
                 removeEmptyAttributes: true,
             },
-            template: "./src/index.html",
+            template: "./src/pages/popup.html",
         }),
         new HashedModuleIdsPlugin(),
         new ForkTsCheckerWebpackPlugin({

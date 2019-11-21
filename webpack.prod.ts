@@ -9,6 +9,12 @@ import { common, outputFolder } from "./webpack.common";
 module.exports = merge(common, {
     mode: "production",
     devtool: "hidden-source-map",
+    // optimization: {
+    //     splitChunks: {
+    //         name: 'vendor',
+    //         chunks: "initial"
+    //     }
+    // },
     optimization: {
         runtimeChunk: "single",
         splitChunks: {
@@ -56,7 +62,7 @@ module.exports = merge(common, {
         ],
     },
     output: {
-        filename: "[name].[contenthash].js",
+        filename: "[name].js",
         path: __dirname + `/${outputFolder}`,
         pathinfo: false,
         publicPath: "/",
