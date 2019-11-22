@@ -1,24 +1,12 @@
-// export interface Nickel {
-// storage: {
-//     local: {
-
-//     }
-//     // NickelStorage;
-// }
-
-// addAsync(xml: string): Promise<Office.AsyncResult<Office.CustomXmlPart>>;
-// getByNamespaceAsync(namespace: string): Promise<Office.AsyncResult<Office.CustomXmlPart[]>>;
-// getByIdAsync(id: string): Promise<Office.AsyncResult<Office.CustomXmlPart>>;
-
-// getXmlAsync(xmlPart: Office.CustomXmlPart): Promise<Office.AsyncResult<string>>;
-// deleteAsync(xmlPart: Office.CustomXmlPart): Promise<Office.AsyncResult<void>>;
-// }
-
 export interface StorageArea {
-    set(items: object): Promise<void>;
-    // remove(keys: string | string[]): Promise<void>;
-    // get(callback: (items: { [key: string]: any }) => void): Promise<void>;
     get(keys: string | string[] | object | null): Promise<{ [key: string]: any }>;
+    getValue<T>(key: string): Promise<T | undefined>;
+
+    set(items: object): Promise<void>;
+    setValue<T>(key: string, value: T): Promise<void>;
+
+    // remove(keys: string | string[]): Promise<void>;
+    // removeValue(key: string): Promise<void>;
 }
 
 export interface Tabs {
@@ -30,8 +18,25 @@ export interface Nickel {
     tabs: Tabs;
 }
 
+// Promise-centric wrapper for the used Chrome Storage APIs
+// Also extending the local storage API to facilitate a typed key-value store
 export class Nickel1 implements Nickel {
     public storage: StorageArea = {
+        get(keys: string | string[] | object | null): Promise<{ [key: string]: any }> {
+            return new Promise((resolve, reject) => {
+                chrome.storage.local.get(keys, (items) => {
+                    const err = chrome.runtime.lastError;
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(items);
+                });
+            });
+        },
+        async getValue<T>(key: string): Promise<T> {
+            const value = await this.get(key);
+            return value[key];
+        },
         set(items: object): Promise<void> {
             return new Promise((resolve, reject) => {
                 chrome.storage.local.set(items, () => {
@@ -43,17 +48,8 @@ export class Nickel1 implements Nickel {
                 });
             });
         },
-
-        get(keys: string | string[] | object | null): Promise<{ [key: string]: any }> {
-            return new Promise((resolve, reject) => {
-                chrome.storage.local.get(keys, (items) => {
-                    const err = chrome.runtime.lastError;
-                    if (err) {
-                        return reject(err);
-                    }
-                    return resolve(items);
-                });
-            });
+        setValue<T>(key: string, value: T): Promise<void> {
+            return this.set({ [key]: value });
         },
     };
 

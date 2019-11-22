@@ -1,7 +1,10 @@
 export class BlockedSite {
     public readonly url: string;
-    constructor(public readonly hostname: string) {
-        this.url = `*://*.${hostname}/*`;
+    public readonly hostname: string;
+
+    constructor(hostname: string) {
+        this.hostname = hostname.startsWith("www.") ? hostname.substring(4) : hostname;
+        this.url = `*://*.${this.hostname}/*`;
     }
 
     public static key = "blockedSite";

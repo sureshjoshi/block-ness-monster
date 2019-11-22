@@ -28,7 +28,7 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
     console.log("Storage changed");
     chrome.webRequest.onBeforeRequest.removeListener(listener);
 
-    const sites = (await nickel.storage.get([BlockedSite.key]))[BlockedSite.key] as BlockedSite[];
+    const sites = (await nickel.storage.getValue<BlockedSite[]>(BlockedSite.key)) ?? [];
     if (sites.length === 0) {
         console.log("No sites to filter");
         return;
@@ -46,7 +46,8 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
 chrome.runtime.onInstalled.addListener(async () => {
     console.log("Installed");
     // https://developer.chrome.com/extensions/webRequest#event-onBeforeRequest
-    const sites = (await nickel.storage.get([BlockedSite.key]))[BlockedSite.key] as BlockedSite[];
+    const sites = (await nickel.storage.getValue<BlockedSite[]>(BlockedSite.key)) ?? [];
+
     if (sites.length === 0) {
         console.log("No sites to filter");
         return;
