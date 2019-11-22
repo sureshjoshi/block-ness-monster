@@ -1,0 +1,21 @@
+{
+    "extends": ["tslint:latest", "tslint-react", "tslint-immutable", "tslint-config-prettier"],
+    "rules": {
+        "interface-name": [true, "never-prefix"],
+        "no-implicit-dependencies": false,
+        "no-console": false,
+        "jsx-no-multiline-js": false,
+        "trailing-comma": false,
+        "jsx-no-lambda": false,
+        "max-line-length": [false],
+        "jsx-alignment": false,
+        "no-submodule-imports": [false, "app", "core-js", "date-fns", "domain", "react-hot-loader"],
+        "object-literal-sort-keys": false,
+        "jsx-boolean-value": false,
+        "member-ordering": false,
+        "ordered-imports": false,
+        "variable-name": false,
+        "no-return-await": true,
+        "no-floating-promises": true
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        /* Basic Options */
+        "target": "es5",
+        "module": "es2015", // TODO: commonjs?
+        "lib": ["dom", "es2015", "es5"],
+        "downlevelIteration": true, // ES5 support: for..of, destructuring, spread (needs shims)
+        "emitDecoratorMetadata": true,
+        "jsx": "react",
+        "noEmitOnError": true,
+        "noImplicitReturns": true,
+        // "noUnusedLocals": true,
+        "outDir": "build",
+        "removeComments": true,
+        "sourceMap": true,
+        /* Strict Typechecking Options */
+        "strict": true,
+        /* Module Resolution Options */
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./", // Must be specified if "paths" is
+        "esModuleInterop": true,
+        "paths": {
+            // Need these, in conjunction with webpack, to remove relative imports
+            "app/*": ["src/app/*"],
+            "data/*": ["src/data/*"],
+            "domain/*": ["src/domain/*"],
+            "office/*": ["src/office/*"]
+        },
+        "types": ["@types/chrome", "jest", "node"],
+        /* Experimental Options */
+        "experimentalDecorators": true,
+        "incremental": true
+    },
+    "include": ["src/**/*.ts*"],
+    "exclude": ["node_modules"]
+}
