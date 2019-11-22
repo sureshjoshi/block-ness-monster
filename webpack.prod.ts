@@ -20,7 +20,11 @@ module.exports = merge(common, {
                         loader: "postcss-loader",
                         options: {
                             ident: "postcss",
-                            plugins: [require("autoprefixer"), require("cssnano")],
+                            plugins: [
+                                require("tailwindcss"),
+                                require("autoprefixer"),
+                                require("cssnano"),
+                            ],
                         },
                     },
                 ],
@@ -39,7 +43,7 @@ module.exports = merge(common, {
     plugins: [
         new CopyWebpackPlugin(["static/"]),
         new MiniCssExtractPlugin({
-            filename: "[name].[contenthash].css",
+            filename: "[name].css",
         }),
         new PurgeCssWebpackPlugin({
             paths: glob.sync([

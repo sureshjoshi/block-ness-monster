@@ -12,7 +12,7 @@ export function srcPath(subdir: string) {
 
 export const common = {
     entry: {
-        popup: srcPath("pages/popup.ts"),
+        popup: srcPath("pages/popup.tsx"),
         // options: path.join(__dirname, srcDir + 'options.ts'),
         background: srcPath("background/background.ts"),
         // content_script: path.join(__dirname, srcDir + 'content_script.ts')
@@ -90,13 +90,6 @@ export const common = {
         }),
     ],
     resolve: {
-        alias: {
-            // Need these, in conjunction with tsconfig, to remove relative imports
-            app: srcPath("app"),
-            data: srcPath("data"),
-            domain: srcPath("domain"),
-            "react-dom": "@hot-loader/react-dom",
-        },
         extensions: [".tsx", ".ts", ".jsx", ".js"],
     },
 };

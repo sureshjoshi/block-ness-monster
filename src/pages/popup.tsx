@@ -1,5 +1,9 @@
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+
 import { Nickel1 } from "../utils/nickel";
 import { BlockedSite } from "../entities/blocked-site";
+import "./popup.css";
 
 // import {chrome} from "chrome";
 
@@ -68,3 +72,38 @@ window.onload = async () => {
     const blockedSites = (await nickel.storage.getValue<BlockedSite[]>(BlockedSite.key)) ?? [];
     blockList.value = blockedSites.map((s) => s.url).join("\n");
 };
+
+const UrlComponent = (hostname: string) => (
+    <div className="flex flex-row">
+        <text className="">{hostname}</text>
+        <button className="">X</button>
+    </div>
+);
+
+const PopupComponent = () => {
+    const [currentHostname, setCurrentHostname] = useState("");
+    const [blockedSites, setBlockedSites] = useState<BlockedSite[]>([]);
+
+    useEffect(() => {
+        async function onLoad() {
+            const currentTab = await getCurrentTab();
+            const url = new URL(currentTab.url || "");
+            setCurrentHostname(url.hostname);
+        }
+        onLoad();
+    }, []);
+
+    const onBlockClicked = async () => {
+        await addToBlockList(currentHostname);
+    };
+
+    return (
+        <div className="flex flex-col">
+            <input>{currentHostname}</input>
+            <button onClick={() => onBlockClicked()}></button>
+            {blockedSites.map((site) => UrlComponent(site.url))}
+        </div>
+    );
+};
+
+ReactDOM.render(<PopupComponent />, document.getElementById("root"));
