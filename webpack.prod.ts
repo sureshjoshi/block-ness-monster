@@ -9,40 +9,6 @@ import { common, outputFolder } from "./webpack.common";
 module.exports = merge(common, {
     mode: "production",
     devtool: "hidden-source-map",
-    // optimization: {
-    //     splitChunks: {
-    //         name: 'vendor',
-    //         chunks: "initial"
-    //     }
-    // },
-    optimization: {
-        runtimeChunk: "single",
-        splitChunks: {
-            chunks: "all",
-            maxAsyncRequests: 20,
-            maxInitialRequests: 20, // test 25-50
-            cacheGroups: {
-                styles: {
-                    name: "styles",
-                    test: /\.css$/,
-                },
-                vendor: {
-                    name(module: any) {
-                        // get the name. E.g. node_modules/packageName/not/this/part.js
-                        // or node_modules/packageName
-                        const packageName = module.context.match(
-                            /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-                        )[1];
-
-                        // npm package names are URL-safe, but some servers don't like @ symbols
-                        return `vendor.${packageName.replace("@", "")}`;
-                    },
-                    // name: "vendors",
-                    test: /[\\/]node_modules[\\/]/,
-                },
-            },
-        },
-    },
     module: {
         rules: [
             {
@@ -61,6 +27,9 @@ module.exports = merge(common, {
             },
         ],
     },
+    // optimization: { ... using defaults ...
+    //     must ensure runtimeChunk is false, otherwise background.ts will fail
+    // },
     output: {
         filename: "[name].js",
         path: __dirname + `/${outputFolder}`,
